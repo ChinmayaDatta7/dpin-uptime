@@ -12,8 +12,8 @@ app.post("/api/v1/website", authMiddleware, async (req, res) => {
 
   const data = await prismaClient.website.create({
     data: {
-      url,
       userId,
+      url,
     },
   });
 
