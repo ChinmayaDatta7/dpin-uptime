@@ -19,12 +19,14 @@ app.post("/api/v1/website", authMiddleware, async (req, res) => {
     },
   });
 
-  res.json({ id: data.id });
+  res.json({
+    id: data.id,
+  });
 });
 
 app.get("/api/v1/website/status", authMiddleware, async (req, res) => {
-  const websiteId = req.query.websiteId as string;
-  const userId = req.userId!;
+  const websiteId = req.query.websiteId! as unknown as string;
+  const userId = req.userId;
 
   const data = await prismaClient.website.findFirst({
     where: {
@@ -53,10 +55,12 @@ app.get("/api/v1/websites", authMiddleware, async (req, res) => {
     },
   });
 
-  res.json(websites);
+  res.json({
+    websites,
+  });
 });
 
-app.delete("/api/v1/website/:websiteId", authMiddleware, async (req, res) => {
+app.delete("/api/v1/website/", authMiddleware, async (req, res) => {
   const websiteId = req.body.websiteId;
   const userId = req.userId!;
 
@@ -70,11 +74,13 @@ app.delete("/api/v1/website/:websiteId", authMiddleware, async (req, res) => {
     },
   });
 
-  res.json({ message: "Website disabled successfully" });
+  res.json({
+    message: "Deleted website successfully",
+  });
 });
+
+app.post("/api/v1/payout/:validatorId", async (req, res) => {});
 
 app.listen(8080, () => {
-  console.log("Server is running on port 3000");
+  console.log("App listening on port 8080");
 });
-
-export default app;

@@ -5,44 +5,45 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  // output   = "../generated/prisma"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id        String   @id @default(uuid())
-  email    String   @unique
+  model User {
+  id              String      @id     @default(uuid())
+  email           String
 }
 
 model Website {
-  id        String   @id @default(uuid())
+  id        String      @id     @default(uuid())
   url       String
   userId    String
-  ticks WebsiteTick[]
-  disabled   Boolean  @default(false)
+  ticks     WebsiteTick[]
+  disabled  Boolean     @default(false)
 }
 
 model Validator {
-  id        String   @id @default(uuid())
+  id        String      @id     @default(uuid())
   publicKey String
   location  String
   ip        String
-  ticks WebsiteTick[]
+  pendingPayouts  Int         @default(0)
+  ticks     WebsiteTick[]
 }
 
-model WebsiteTick{
-  id         String   @id @default(uuid())
-  createdAt  DateTime
-  websiteId  String
-  validatorId String
-  status     WebsiteStatus
-  latency    Float
-  website    Website   @relation(fields: [websiteId], references: [id])
-  validator  Validator @relation(fields: [validatorId], references: [id])
+model WebsiteTick {
+  id              String      @id     @default(uuid())
+  websiteId       String
+  validatorId     String
+  createdAt       DateTime
+  status          WebsiteStatus
+  latency         Float
+  website         Website    @relation(fields: [websiteId], references: [id])
+  validator       Validator    @relation(fields: [validatorId], references: [id])
 }
 
 enum WebsiteStatus {

@@ -26,5 +26,8 @@
   ],
   "ignoreScripts": [
     "prisma"
-  ]
+  ],
+  "dependencies": {
+    "prisma": "^7.4.0"
+  }
 }

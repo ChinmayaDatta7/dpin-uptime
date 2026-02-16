@@ -1,4 +1,0 @@
-[install]
-# Ignore scripts during installation to prevent Prisma's preinstall script from failing
-ignore-scripts = true
-
