@@ -1,39 +1,38 @@
-import { prismaClient } from "./src";
+import { prismaClient } from "../src";
 
 const USER_ID = "4";
 
 async function seed() {
   await prismaClient.user.create({
     data: {
-      id: "1",
+      id: "2",
       email: "test@test.com",
     },
   });
 
   const website = await prismaClient.website.create({
     data: {
-      id: "1",
+      id: "2",
       url: "https://test.com",
       userId: "1",
     },
   });
 
-  //   const validator = await prismaClient.validator.create({
-  //     data: {
-  //       publicKey: "0x12341223123",
-  //       location: "Delhi",
-  //       ip: "127.0.0.1",
-  //     },
-  //   });
+  const validator = await prismaClient.validator.create({
+    data: {
+      publicKey: "0x12341223123",
+      location: "Delhi",
+      ip: "127.0.0.1",
+    },
+  });
 
   await prismaClient.websiteTick.create({
     data: {
-      id: "1",
       websiteId: "1",
       status: "Good",
       createdAt: new Date(),
       latency: 100,
-      validatorId: "1",
+      validatorId: validator.id,
     },
   });
 
@@ -43,7 +42,7 @@ async function seed() {
       status: "Good",
       createdAt: new Date(Date.now() - 1000 * 60 * 10),
       latency: 100,
-      validatorId: "1",
+      validatorId: validator.id,
     },
   });
 
@@ -53,7 +52,7 @@ async function seed() {
       status: "Bad",
       createdAt: new Date(Date.now() - 1000 * 60 * 20),
       latency: 100,
-      validatorId: "1",
+      validatorId: validator.id,
     },
   });
 }

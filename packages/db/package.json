@@ -15,5 +15,8 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.4.0",
     "prisma": "^7.4.0"
+  },
+  "prisma": {
+    "seed": "./seed.ts"
   }
 }
