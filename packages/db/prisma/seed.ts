@@ -3,7 +3,7 @@ import { prismaClient } from "../src";
 const USER_ID = "4";
 
 async function seed() {
-  await prismaClient.user.create({
+  const user = await prismaClient.user.create({
     data: {
       id: "2",
       email: "test@test.com",
@@ -14,7 +14,7 @@ async function seed() {
     data: {
       id: "2",
       url: "https://test.com",
-      userId: "1",
+      userId: user.id,
     },
   });
 
@@ -28,7 +28,7 @@ async function seed() {
 
   await prismaClient.websiteTick.create({
     data: {
-      websiteId: "1",
+      websiteId: website.id,
       status: "Good",
       createdAt: new Date(),
       latency: 100,
